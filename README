@@ -1,0 +1,37 @@
+SlideExtract
+============
+
+SlideExtract is a simple program to extract slides from videos.
+It outputs an image for each slide. Slide detection is done by comparing each
+frame with the previous one. For better results and speed it is recommended
+to specify a region that should be compared. Best results are usually achived
+when selecting the slide number (since that only changes with every slide).
+
+Once extraction is completed you can view the extracted slides with your
+favorite image viewer and delete possible duplicates (this usually happens
+when the video jumps back and forth between slides).
+
+You can then combine the slides to a pdf with a tool like convert:
+
+    convert `ls -v outprefix*.png` outprefix.pdf
+
+
+Dependencies
+============
+
+* opencv 2.x
+
+
+Build Instructions
+==================
+
+    ./configure
+    make
+    make install
+
+
+License
+=======
+
+BSD 2-Clause license, see the COPYING file for more details.
+
