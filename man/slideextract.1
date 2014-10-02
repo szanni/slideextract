@@ -1,0 +1,51 @@
+.Dd October 2, 2014
+.Dt SLIDEEXTRACT 1
+.Os
+.Sh NAME
+.Nm slideextract
+.Nd extract slides from videos
+.Sh SYNOPSIS
+.Nm
+.Op Fl g
+.Op Fl r Ar x1.y1:x2.y2
+.Ar file
+.Ar prefix
+.Sh DESCRIPTION
+Output one image for each slide detected within the video file.
+.Bl -tag -width Ds
+.It Fl g
+Launch graphical user interface to set comparison region; press any key to
+start extraction and print selected region.
+.It Fl r Ar x1.y1:x2.y2
+Manually set comparison region to
+.Ar x1.y1:x2.y2 .
+.It Ar file
+Read from video
+.Ar file .
+.It Ar prefix
+Prefix output images with
+.Ar prefix .
+.El
+.Pp
+Select a comparison region (e.g. slide number area) for faster and more
+accurate slide detection.
+.Sh EXIT STATUS
+.Ex -std
+.Sh EXAMPLES
+.Bl -item
+.It
+Extract slides by launching the graphical user interface to select the
+comparison region for slide detection.
+.Pp
+.Dl slideextract -g video.mpg slides
+.It
+Create a pdf containing all slides detected in
+.Ar video.mpg .
+You might want to check and delete possible duplicates before converting to pdf.
+.Pp
+.Dl slideextract -g video.mpg slides
+.Dl convert `ls -v slides*.png` slides.pdf
+.El
+.Sh SEE ALSO
+.Xr convert 1 ,
+.Xr ls 1
