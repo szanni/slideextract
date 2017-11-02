@@ -1,3 +1,7 @@
+0.0.3
+=====
+* Quickfix opencv 2 header include issues.
+
 0.0.2
 =====
 * Add man page

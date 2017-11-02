@@ -1,4 +1,4 @@
-AC_INIT([slideextract], [0.0.2], [slideextract@szanni.org])
+AC_INIT([slideextract], [0.0.3], [slideextract@szanni.org])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign dist-xz subdir-objects])
 AC_PROG_CC
 AC_CONFIG_HEADERS([config.h])
