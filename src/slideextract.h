@@ -28,7 +28,7 @@
 #ifndef SLIDEEXTRACT_H
 #define SLIDEEXTRACT_H
 
-#include <opencv2/core/types_c.h>
+#include <opencv4/opencv2/core/types_c.h>
 
 /*!
  * \brief Playback video for roi selection with mouse
