@@ -66,9 +66,9 @@ POSSIBILITY OF SUCH DAMAGE.");
 
 //! Print help and exit program
 static void
-help ()
+help()
 {
-  puts ("Usage: " PACKAGE_NAME " [OPTION] [infile outprefix]\n\
+	puts ("Usage: " PACKAGE_NAME " [OPTION] [infile outprefix]\n\
 \n\
 Extract slides from video.\n\
 \n\
@@ -83,62 +83,60 @@ accurate extraction.\n\
 \n\
 Report bugs to: " PACKAGE_BUGREPORT);
 
-  exit (0);
+	exit (0);
 }
 
 int
 main (int argc, char **argv)
 {
-  struct roi roi;
-  bool gflag = 0;
-  bool rflag = 0;
-  int c;
-  int ret;
+	struct roi roi;
+	bool gflag = 0;
+	bool rflag = 0;
+	int c;
+	int ret;
 
-  while ((c = getopt(argc, argv, "gr:V")) != -1)
-    {
-      switch (c)
-        {
-          case 'g':
-            gflag = 1;
-            break;
+	while ((c = getopt(argc, argv, "gr:V")) != -1) {
+		switch (c) {
+			case 'g':
+				gflag = 1;
+				break;
 
-          case 'r':
-            rflag = 1;
-            if (sscanf (optarg, "%d.%d:%d.%d", &roi.x, &roi.y, &roi.width, &roi.height) != 4)
-              help();
-            break;
+			case 'r':
+				rflag = 1;
+				if (sscanf(optarg, "%d.%d:%d.%d", &roi.x, &roi.y, &roi.width, &roi.height) != 4)
+					help();
+				break;
 
-          case 'V':
-            version ();
-            break;
+			case 'V':
+				version();
+				break;
 
-          case '?':
-          default:
-            help ();
-        }
-    }
-  argc -= optind;
-  argv += optind;
+			case '?':
+			default:
+				help();
+		}
+	}
+	argc -= optind;
+	argv += optind;
 
-  if (argc != 2 || (gflag && rflag))
-    help();
+	if (argc != 2 || (gflag && rflag))
+		help();
 
-  const char *file = *argv++;
-  const char *outprefix = *argv;
+	const char *file = *argv++;
+	const char *outprefix = *argv;
 
-  if (rflag)
-    return se_extract_slides (file, outprefix, &roi);
+	if (rflag)
+		return se_extract_slides(file, outprefix, &roi);
 
-  if (gflag)
-    {
-      if ((ret = se_select_roi (file, &roi)))
-        return ret;
+	if (gflag)
+	{
+		if ((ret = se_select_roi(file, &roi)))
+			return ret;
 
-      printf ("Selected ROI: %d.%d:%d.%d\n", roi.x, roi.y, roi.width, roi.height);
-      return se_extract_slides (file, outprefix, &roi);
-    }
+		printf("Selected ROI: %d.%d:%d.%d\n", roi.x, roi.y, roi.width, roi.height);
+		return se_extract_slides(file, outprefix, &roi);
+	}
 
-  return se_extract_slides (file, outprefix, NULL);
+	return se_extract_slides(file, outprefix, NULL);
 }
 

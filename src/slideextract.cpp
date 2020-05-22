@@ -35,151 +35,143 @@
 
 using namespace cv;
 
-
-
 static bool selected_roi = 0;
 static Point point1;
 static Point point2;
 
 static void
-_se_mouseHandler (int event, int x, int y, int flags, void *param)
+_se_mouseHandler(int event, int x, int y, int flags, void *param)
 {
-  Mat clone;
-  Mat frame = *(Mat*)param;
+	Mat clone;
+	Mat frame = *(Mat*)param;
 
-  if (event == EVENT_LBUTTONDOWN && (flags & EVENT_FLAG_LBUTTON))
-    {
-      point1 = Point (x, y);
-      point2 = Point (x, y);
-    }
+	if (event == EVENT_LBUTTONDOWN && (flags & EVENT_FLAG_LBUTTON)) {
+		point1 = Point (x, y);
+		point2 = Point (x, y);
+	}
 
-  if (!(flags & EVENT_FLAG_LBUTTON))
-    return;
+	if (!(flags & EVENT_FLAG_LBUTTON))
+		return;
 
-  if (event != EVENT_MOUSEMOVE && event != EVENT_LBUTTONUP)
-    return;
+	if (event != EVENT_MOUSEMOVE && event != EVENT_LBUTTONUP)
+		return;
 
-  point2 = Point (x, y);
-  selected_roi = (point1.x != point2.x && point1.y != point2.y);
+	point2 = Point(x, y);
+	selected_roi = (point1.x != point2.x && point1.y != point2.y);
 
-  clone = frame.clone();
-  rectangle(clone, point1, point2, CV_RGB(0, 255, 0), 1, 8, 0);
-  imshow("frame", clone);
+	clone = frame.clone();
+	rectangle(clone, point1, point2, CV_RGB(0, 255, 0), 1, 8, 0);
+	imshow("frame", clone);
 }
 
 int
-se_select_roi (const char *file, struct roi *roi)
+se_select_roi(const char *file, struct roi *roi)
 {
-  VideoCapture capture = VideoCapture(file, CAP_ANY);
+	VideoCapture capture = VideoCapture(file, CAP_ANY);
 
-  if (!capture.isOpened())
-    return -1;
+	if (!capture.isOpened())
+		return -1;
 
-  int key = -1;
-  Mat frame;
-  Mat clone;
-  namedWindow ("frame", WINDOW_AUTOSIZE);
+	int key = -1;
+	Mat frame;
+	Mat clone;
+	namedWindow("frame", WINDOW_AUTOSIZE);
 
-  while (key == -1)
-    {
-      capture.read(frame);
-      if (frame.empty())
-        break;
+	while (key == -1)
+	{
+		capture.read(frame);
+		if (frame.empty())
+			break;
 
-      setMouseCallback ("frame", _se_mouseHandler, &frame);
+		setMouseCallback("frame", _se_mouseHandler, &frame);
 
-      if (selected_roi)
-        {
-          clone = frame.clone();
-          rectangle(clone, point1, point2, CV_RGB(0, 255, 0), 1, 8, 0);
-          imshow("frame", clone);
-        }
-      else
-        {
-          imshow("frame", frame);
-        }
+		if (selected_roi)
+		{
+			clone = frame.clone();
+			rectangle(clone, point1, point2, CV_RGB(0, 255, 0), 1, 8, 0);
+			imshow("frame", clone);
+		}
+		else
+		{
+			imshow("frame", frame);
+		}
 
-      key = waitKey (10);
-    }
+		key = waitKey (10);
+	}
 
-  startWindowThread();
+	startWindowThread();
 
-  destroyAllWindows();
+	destroyAllWindows();
 
-  if (selected_roi)
-    {
-      roi->x = point1.x;
-      roi->y = point1.y;
-      roi->width = point2.x - point1.x;
-      roi->height = point2.y - point1.y;
-      return 0;
-    }
+	if (selected_roi)
+	{
+		roi->x = point1.x;
+		roi->y = point1.y;
+		roi->width = point2.x - point1.x;
+		roi->height = point2.y - point1.y;
+		return 0;
+	}
 
-  return -1;
+	return -1;
 }
 
 static double
-_se_compare_image (Mat &img1, Mat &img2, struct roi *roi)
+_se_compare_image(Mat &img1, Mat &img2, struct roi *roi)
 {
-  double correlation;
-  Mat result = Mat(1, 1, CV_32F);
-  Mat i1, i2;
+	double correlation;
+	Mat result = Mat(1, 1, CV_32F);
+	Mat i1, i2;
 
-  if (roi != NULL)
-    {
-      Rect r = Rect(roi->x, roi->y, roi->width, roi->height);
-      i1 = img1.clone()(r);
-      i2 = img2.clone()(r);
-    }
-  else
-    {
-      i1 = img1;
-      i2 = img2;
-    }
+	if (roi != NULL) {
+		Rect r = Rect(roi->x, roi->y, roi->width, roi->height);
+		i1 = img1.clone()(r);
+		i2 = img2.clone()(r);
+	}
+	else {
+		i1 = img1;
+		i2 = img2;
+	}
 
-  matchTemplate (i1, i2, result, TM_CCORR_NORMED);
-  minMaxLoc (result, NULL, &correlation); //, NULL, NULL, NULL);
+	matchTemplate(i1, i2, result, TM_CCORR_NORMED);
+	minMaxLoc(result, NULL, &correlation);
 
-  return correlation;
+	return correlation;
 }
 
 int
-se_extract_slides (const char *file, const char *outprefix, struct roi *roi)
+se_extract_slides(const char *file, const char *outprefix, struct roi *roi)
 {
-  int num = 0;
-  char str[64];
+	int num = 0;
+	char str[64];
 
-  std::vector<int> image_properties;
-  image_properties.push_back(IMWRITE_PNG_COMPRESSION);
-  image_properties.push_back(9);
-  image_properties.push_back(0);
+	std::vector<int> image_properties;
+	image_properties.push_back(IMWRITE_PNG_COMPRESSION);
+	image_properties.push_back(9);
+	image_properties.push_back(0);
 
-  Mat current;
-  Mat last;
+	Mat current;
+	Mat last;
 
-  VideoCapture capture = VideoCapture(file, CAP_ANY);
-  if (!capture.isOpened())
-    return -1;
+	VideoCapture capture = VideoCapture(file, CAP_ANY);
+	if (!capture.isOpened())
+		return -1;
 
-  do
-    {
-      capture.read(current);
-      if (current.empty())
-        break;
+	do {
+		capture.read(current);
+		if (current.empty())
+			break;
 
-      if (!last.empty())
-        {
-          double cmp = _se_compare_image (last, current, roi);
-          if (cmp <= 0.999)
-            {
-              snprintf (str, sizeof(str)/sizeof(*str), "%s%d.png", outprefix, num++);
-              imwrite(str, last, image_properties);
-            }
-        }
-      last = current.clone();
-    }
-  while (!current.empty());
+		if (!last.empty()) {
+			double cmp = _se_compare_image (last, current, roi);
+			if (cmp <= 0.999) {
+				snprintf (str, sizeof(str)/sizeof(*str), "%s%d.png", outprefix, num++);
+				imwrite(str, last, image_properties);
+			}
+		}
+		last = current.clone();
+	}
+	while (!current.empty());
 
-  return 0;
+	return 0;
 }
 
