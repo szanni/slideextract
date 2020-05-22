@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 //! Print version and exit program
 static void
@@ -88,9 +89,9 @@ Report bugs to: " PACKAGE_BUGREPORT);
 int
 main (int argc, char **argv)
 {
-  CvRect roi;
-  _Bool gflag = 0;
-  _Bool rflag = 0;
+  struct roi roi;
+  bool gflag = 0;
+  bool rflag = 0;
   int c;
   int ret;
 

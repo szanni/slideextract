@@ -28,7 +28,17 @@
 #ifndef SLIDEEXTRACT_H
 #define SLIDEEXTRACT_H
 
-#include <opencv2/core/types_c.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+struct roi
+{
+  int x;
+  int y;
+  int width;
+  int height;
+};
 
 /*!
  * \brief Playback video for roi selection with mouse
@@ -36,7 +46,7 @@
  * \param roi Region of interest selected by user
  * \return 0 on success, -1 on failure or abort by user
  */
-int se_select_roi (const char *file, CvRect *roi);
+int se_select_roi (const char *file, struct roi *roi);
 
 /*!
  * \brief Extract slides from video
@@ -45,7 +55,11 @@ int se_select_roi (const char *file, CvRect *roi);
  * \param roi Frame comparison region for slide detection, whole frame on NULL
  * \return 0 on success, -1 on failure
  */
-int se_extract_slides (const char *file, const char *outprefix, CvRect *roi);
+int se_extract_slides (const char *file, const char *outprefix, struct roi *roi);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

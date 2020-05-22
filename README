@@ -23,7 +23,7 @@ You can then combine the slides to a pdf with a tool like convert:
 Dependencies
 ------------
 
-* opencv 2.x
+* opencv 4.x
 
 
 Build Instructions
