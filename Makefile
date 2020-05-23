@@ -8,6 +8,7 @@ PREFIX ?= /usr/local
 CC ?= gcc
 CXX ?= g++
 
+CPPFLAGS += -D'VERSION="${VERSION}"'
 CPPFLAGS += -Wall -Wextra -pedantic
 CPPFLAGS += `pkg-config --cflags 'opencv4 >= 4.0'`
 #LDFLAGS += `pkg-config --libs 'opencv4 >= 4.0'`

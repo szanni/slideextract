@@ -35,7 +35,7 @@
 static void
 version ()
 {
-  puts ("slideextract\n\
+	puts("slideextract " VERSION "\n\
 Copyright (c) 2013 Angelo Haller <angelo@szanni.org>\n\
 All rights reserved.\n\
 \n\
@@ -60,7 +60,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\n\
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\n\
 POSSIBILITY OF SUCH DAMAGE.");
 
-  exit (0);
+	exit (0);
 }
 
 //! Print help and exit program
