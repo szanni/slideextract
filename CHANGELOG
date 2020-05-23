@@ -1,3 +1,9 @@
+0.1.0
+=====
+* Upgrade to OpenCV4
+* Downgrade project to C++ due to OpenCV dropping the C API
+* Replace autotools with simple make (GNU/BSD)
+
 0.0.3
 =====
 * Quickfix opencv 2 header include issues.
