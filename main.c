@@ -26,7 +26,6 @@
  */
 
 #include "slideextract.h"
-#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -36,7 +35,7 @@
 static void
 version ()
 {
-  puts (PACKAGE_STRING "\n\
+  puts ("slideextract\n\
 Copyright (c) 2013 Angelo Haller <angelo@szanni.org>\n\
 All rights reserved.\n\
 \n\
@@ -68,7 +67,7 @@ POSSIBILITY OF SUCH DAMAGE.");
 static void
 help()
 {
-	puts ("Usage: " PACKAGE_NAME " [OPTION] [infile outprefix]\n\
+	puts ("Usage: slideextract [OPTION] infile outprefix\n\
 \n\
 Extract slides from video.\n\
 \n\
@@ -79,9 +78,7 @@ Extract slides from video.\n\
   -V  Output version information and exit\n\
 \n\
 Select a comparision region (e.g. slide number) for faster and more\n\
-accurate extraction.\n\
-\n\
-Report bugs to: " PACKAGE_BUGREPORT);
+accurate extraction.\n");
 
 	exit (0);
 }

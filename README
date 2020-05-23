@@ -29,9 +29,8 @@ Dependencies
 Build Instructions
 ------------------
 
-    ./configure
     make
-    make install
+    make install # DESTDIR= PREFIX=/usr/local
 
 
 License
