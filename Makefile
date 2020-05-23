@@ -2,7 +2,7 @@
 
 PACKAGE = slideextract
 VERSION = 0.0.3
-DIST = Makefile ${PACKAGE}.h ${PACKAGE}.cpp ${PACKAGE}.1 main.c COPYING CHANGELOG
+DIST = Makefile ${PACKAGE}.h ${PACKAGE}.cpp ${PACKAGE}.1 main.c LICENSE CHANGELOG
 
 PREFIX ?= /usr/local
 CC ?= gcc
