@@ -9,7 +9,11 @@ to account for video encoding artifacts.
 For better results and faster extraction you should specify a comparison
 region, such as the slide number. From a series of unchanging comparison
 regions slideextract will pick the last frame in hopes of capturing the
-final state of the entire slide (animated bullet points, etc...).
+final state of the entire slide (animated bullet points, annotations,
+etc...).
+
+    # Select a comparision region via gui
+    slideextract -g video.mp4 outprefix
 
 Once extraction is completed you can view the extracted slides with your
 favorite image viewer and delete possible duplicates. This often happens
