@@ -28,7 +28,7 @@
 #include "slideextract.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <cargs.h>
 #include <stdbool.h>
 
 //! Print version and exit program
@@ -63,23 +63,42 @@ POSSIBILITY OF SUCH DAMAGE.");
 	exit (0);
 }
 
+
+/**
+ * This is the main configuration of all options available.
+ */
+static struct cag_option options[] = {
+	{.identifier = 'g',
+	 .access_letters = "g",
+	 .access_name = "gui",
+	 .value_name = NULL,
+	 .description = "Launch gui to set comparison region, press any key when done"},
+
+	{.identifier = 'r',
+	 .access_letters = "r",
+	 .access_name = "region",
+	 .value_name = "X1.Y1:X2.Y2",
+	 .description = "Manually set comparison region (e.g. slide number) for faster and more accurate extraction."},
+
+	{.identifier = 'V',
+	 .access_letters = "V",
+	 .access_name = "version",
+	 .value_name = NULL,
+	 .description = "Show version"},
+
+	{.identifier = '?',
+	 .access_letters = "h",
+	 .access_name = "help",
+	 .value_name = NULL,
+	 .description = "Display this help and exit"}
+};
+
 //! Print help and exit program
 static void
 help()
 {
-	puts ("Usage: slideextract [OPTION] infile outprefix\n\
-\n\
-Extract slides from video.\n\
-\n\
-  -g              Launch gui to set comparison region, press any key when done\n\
-  -r X1.Y1:X2.Y2  Manually set comparison region\n\
-\n\
-  -h  Display this help and exit\n\
-  -V  Output version information and exit\n\
-\n\
-Select a comparision region (e.g. slide number) for faster and more\n\
-accurate extraction.\n");
-
+	puts("Usage: slideextract [OPTION] infile outprefix\n Extract slides from video.");
+	cag_option_print(options, CAG_ARRAY_SIZE(options), stdout);
 	exit (0);
 }
 
@@ -89,18 +108,19 @@ main (int argc, char **argv)
 	struct roi roi;
 	bool gflag = 0;
 	bool rflag = 0;
-	int c;
 	int ret;
+	cag_option_context context;
 
-	while ((c = getopt(argc, argv, "gr:V")) != -1) {
-		switch (c) {
+	cag_option_prepare(&context, options, CAG_ARRAY_SIZE(options), argc, argv);
+	while (cag_option_fetch(&context)) {
+		switch (cag_option_get(&context)) {
 			case 'g':
 				gflag = 1;
 				break;
 
 			case 'r':
 				rflag = 1;
-				if (sscanf(optarg, "%d.%d:%d.%d", &roi.x, &roi.y, &roi.width, &roi.height) != 4)
+				if (sscanf(cag_option_get_value(&context), "%d.%d:%d.%d", &roi.x, &roi.y, &roi.width, &roi.height) != 4)
 					help();
 				break;
 
@@ -113,6 +133,7 @@ main (int argc, char **argv)
 				help();
 		}
 	}
+	int optind = cag_option_get_index(&context);
 	argc -= optind;
 	argv += optind;
 
@@ -136,4 +157,3 @@ main (int argc, char **argv)
 
 	return se_extract_slides(file, outprefix, NULL);
 }
-
