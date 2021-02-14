@@ -1,0 +1,6 @@
+[requires]
+opencv/4.5.1
+cargs/1.0.0
+
+[generators]
+cmake
