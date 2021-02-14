@@ -24,21 +24,25 @@ You can then combine the slides to a pdf with a tool like convert:
     convert `ls -v outprefix*.png` outprefix.pdf
 
 
-Dependencies
-------------
-
-* opencv 4.x
-
-
 Build Instructions
 ------------------
 
-    make
-    make install # DESTDIR= PREFIX=/usr/local
+    # build directory
+    mkdir build
+
+    # Install dependencies
+    cd build
+    conan install .. --build=missing
+    cd ..
+
+    # Configure build
+    cmake -S . -B ./build
+
+    # Build
+    cmake --build ./build
 
 
 License
 -------
 
 BSD 2-Clause license, see LICENSE for more details.
-
