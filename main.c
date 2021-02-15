@@ -35,7 +35,7 @@
 static void
 version ()
 {
-	puts("slideextract " VERSION "\n\
+	puts("slideextract 0.1.0 \n\
 Copyright (c) 2013 Angelo Haller <angelo@szanni.org>\n\
 All rights reserved.\n\
 \n\

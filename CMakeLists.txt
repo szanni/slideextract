@@ -12,6 +12,5 @@ include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
 # main.c
-add_compile_definitions(VERSION=${VERSION})
 add_executable(slideextract main.c slideextract.cpp slideextract.h)
 target_link_libraries(slideextract PRIVATE ${CONAN_LIBS})
