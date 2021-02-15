@@ -27,6 +27,7 @@
 
 #include "slideextract.h"
 #include <stdio.h>
+#include <cmath>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -105,10 +106,34 @@ se_select_roi(const char *file, struct roi *roi)
 
 	if (selected_roi)
 	{
+
+		// make point1 the top-left point
+		if (point1.x >= point2.x && point1.y <= point2.y)
+		{ // started from bottom right gone to top-left
+			int xtmp = point1.x;
+			int ytmp = point1.y;
+			point1.x = point2.x;
+			point1.y = point2.y;
+			point2.x = xtmp;
+			point2.y = ytmp;
+		}
+		else if (point1.x >= point2.x && point1.y <= point2.y)
+		{ // started from bottom left gone to top-right
+			int ytmp = point1.y;
+			point1.y = point2.y;
+			point2.y = ytmp;
+		}
+		else if (point1.x >= point2.x && point1.y <= point2.y)
+		{ // started from top right gone to bottom left
+			int xtmp = point1.x;
+			point1.x = point2.x;
+			point2.x = xtmp;
+		}
+
 		roi->x = point1.x;
 		roi->y = point1.y;
-		roi->width = point2.x - point1.x;
-		roi->height = point2.y - point1.y;
+		roi->width = std::abs(point2.x - point1.x);
+		roi->height = std::abs(point2.y - point1.y);
 		return 0;
 	}
 
@@ -174,4 +199,3 @@ se_extract_slides(const char *file, const char *outprefix, struct roi *roi)
 
 	return 0;
 }
-
