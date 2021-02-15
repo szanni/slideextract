@@ -163,7 +163,7 @@ se_extract_slides(const char *file, const char *outprefix, struct roi *roi)
 
 		if (!last.empty()) {
 			double cmp = _se_compare_image (last, current, roi);
-			if (cmp <= 0.999) {
+			if (0 < cmp && cmp <= 0.999) {
 				snprintf (str, sizeof(str)/sizeof(*str), "%s%d.png", outprefix, num++);
 				imwrite(str, last, image_properties);
 			}
