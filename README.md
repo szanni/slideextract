@@ -32,14 +32,14 @@ Build Instructions
 
     # Install dependencies
     cd build
-    conan install .. --build=missing
+    conan install .. --build=missing -s build_type=Release
     cd ..
 
     # Configure build
     cmake -S . -B ./build
 
     # Build
-    cmake --build ./build
+    cmake --build ./build --config Release
 
 
 License
