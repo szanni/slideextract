@@ -1,7 +1,7 @@
 .PHONY: all install dist clean distclean
 
 PACKAGE = slideextract
-VERSION = 0.1.0
+VERSION = 0.2.0
 DIST = Makefile ${PACKAGE}.h ${PACKAGE}.cpp ${PACKAGE}.1 main.c LICENSE CHANGELOG README.md
 
 PREFIX ?= /usr/local

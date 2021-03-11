@@ -1,3 +1,10 @@
+0.2.0
+=====
+* Add README to source distribution.
+* Add GUI example to README.
+* Fix region of interest handling. You can now select your ROI from any side:
+  e.g. bottom-left to top-right and not just top-left to bottom-right.
+
 0.1.0
 =====
 * Upgrade to OpenCV4
