@@ -27,6 +27,7 @@
 
 #include "slideextract.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -105,10 +106,10 @@ se_select_roi(const char *file, struct roi *roi)
 
 	if (selected_roi)
 	{
-		roi->x = point1.x;
-		roi->y = point1.y;
-		roi->width = point2.x - point1.x;
-		roi->height = point2.y - point1.y;
+		roi->x = (point1.x < point2.x) ? point1.x : point2.x;
+		roi->y = (point1.y < point2.y) ? point1.y : point2.y;
+		roi->width = abs(point2.x - point1.x);
+		roi->height = abs(point2.y - point1.y);
 		return 0;
 	}
 
