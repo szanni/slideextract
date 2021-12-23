@@ -1,3 +1,10 @@
+0.2.1
+=====
+* Fix region of interest description in help message
+* Fix region of interest calculation from GUI. Left Button down/up/hold events
+  are now properly handled according to the events sequence that occurs in
+  reality.
+
 0.2.0
 =====
 * Add README to source distribution.
