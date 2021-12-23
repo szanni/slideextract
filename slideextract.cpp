@@ -46,7 +46,7 @@ _se_mouseHandler(int event, int x, int y, int flags, void *param)
 	Mat clone;
 	Mat frame = *(Mat*)param;
 
-	if (event == EVENT_LBUTTONDOWN && (flags & EVENT_FLAG_LBUTTON)) {
+	if (event == EVENT_LBUTTONDOWN) {
 		point1 = Point (x, y);
 		point2 = Point (x, y);
 	}
