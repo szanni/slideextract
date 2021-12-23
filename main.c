@@ -72,7 +72,8 @@ help()
 Extract slides from video.\n\
 \n\
   -g              Launch gui to set comparison region, press any key when done\n\
-  -r X1.Y1:X2.Y2  Manually set comparison region\n\
+  -r X1.Y1:W.H    Manually set comparison region by providing coordinates of \n\
+                  the top-left corner and Width and Height of the region\n\
 \n\
   -h  Display this help and exit\n\
   -V  Output version information and exit\n\
