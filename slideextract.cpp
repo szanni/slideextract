@@ -159,19 +159,22 @@ se_extract_slides(const char *file, const char *outprefix, struct roi *roi)
 
 	do {
 		capture.read(current);
-		if (current.empty())
+
+		bool is_final_frame = current.empty();
+		bool is_changed_frame = !current.empty() && !last.empty()
+			&& _se_compare_image (last, current, roi) <= 0.999;
+                
+		if (is_final_frame || is_changed_frame) {
+			snprintf (str, sizeof(str)/sizeof(*str), "%s%d.png", outprefix, num++);
+			imwrite(str, last, image_properties);
+		}
+
+		if (is_final_frame)
 			break;
 
-		if (!last.empty()) {
-			double cmp = _se_compare_image (last, current, roi);
-			if (cmp <= 0.999) {
-				snprintf (str, sizeof(str)/sizeof(*str), "%s%d.png", outprefix, num++);
-				imwrite(str, last, image_properties);
-			}
-		}
 		last = current.clone();
 	}
-	while (!current.empty());
+	while (true);
 
 	return 0;
 }
