@@ -48,8 +48,9 @@ help()
 \n\
 Extract slides from video.\n\
 \n\
-  -g              Launch gui to set comparison region, press any key when done\n\
-  -r X1.Y1:X2.Y2  Manually set comparison region\n\
+  -g          Launch gui to set comparison region, press any key when done\n\
+  -r X.Y:WxH  Manually set comparison region by specifying a starting point X.Y\n\
+              and width & height WxH\n\
 \n\
   -h  Display this help and exit\n\
   -V  Output version information and exit\n\
@@ -77,7 +78,7 @@ main (int argc, char **argv)
 
 			case 'r':
 				rflag = 1;
-				if (sscanf(optarg, "%d.%d:%d.%d", &roi.x, &roi.y, &roi.width, &roi.height) != 4)
+				if (sscanf(optarg, "%d.%d:%dx%d", &roi.x, &roi.y, &roi.width, &roi.height) != 4)
 					help();
 				break;
 
@@ -108,7 +109,7 @@ main (int argc, char **argv)
 		if ((ret = se_select_roi(file, &roi)))
 			return ret;
 
-		printf("Selected ROI: %d.%d:%d.%d\n", roi.x, roi.y, roi.width, roi.height);
+		printf("Selected ROI: %d.%d:%dx%d\n", roi.x, roi.y, roi.width, roi.height);
 		return se_extract_slides(file, outprefix, &roi);
 	}
 

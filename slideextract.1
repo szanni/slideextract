@@ -7,7 +7,7 @@
 .Sh SYNOPSIS
 .Nm
 .Op Fl g
-.Op Fl r Ar x1.y1:x2.y2
+.Op Fl r Ar X.Y:WxH
 .Ar file
 .Ar prefix
 .Sh DESCRIPTION
@@ -16,9 +16,11 @@ Output one image for each slide detected within the video file.
 .It Fl g
 Launch graphical user interface to set comparison region; press any key to
 start extraction and print selected region.
-.It Fl r Ar x1.y1:x2.y2
-Manually set comparison region to
-.Ar x1.y1:x2.y2 .
+.It Fl r Ar X.Y:WxH
+Manually set comparison region by specifying a starting point
+.Ar X.Y
+and width & height
+.Ar WxH .
 .It Ar file
 Read from video
 .Ar file .
