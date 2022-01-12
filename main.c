@@ -92,7 +92,7 @@ main (int argc, char **argv)
 	int c;
 	int ret;
 
-	while ((c = getopt(argc, argv, "gr:V")) != -1) {
+	while ((c = getopt(argc, argv, "gr:Vh")) != -1) {
 		switch (c) {
 			case 'g':
 				gflag = 1;
@@ -108,6 +108,7 @@ main (int argc, char **argv)
 				version();
 				break;
 
+			case 'h':
 			case '?':
 			default:
 				help();
