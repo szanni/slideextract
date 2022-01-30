@@ -3,6 +3,8 @@
 PACKAGE = slideextract
 VERSION = 0.2.0
 DIST = Makefile ${PACKAGE}.h ${PACKAGE}.cpp ${PACKAGE}.1 main.c LICENSE CHANGELOG README.md
+#DIST += test/test.mp4 test/svg/1.svg test/svg/2.svg test/svg/3.svg test/svg/4.svg test/svg/5.svg
+#DIST += test/svg/6.svg test/svg/7.svg test/svg/8.svg test/svg/9.svg
 
 PREFIX ?= /usr/local
 CC ?= gcc
@@ -26,7 +28,7 @@ install: ${PACKAGE} ${PACKAGE}.1
 
 dist: ${DIST}
 	mkdir -p ${PACKAGE}-${VERSION}
-	cp ${DIST} ${PACKAGE}-${VERSION}
+	cp --parents ${DIST} ${PACKAGE}-${VERSION}
 	tar -cf ${PACKAGE}-${VERSION}.tar ${PACKAGE}-${VERSION}
 	gzip -fk ${PACKAGE}-${VERSION}.tar
 	xz -f ${PACKAGE}-${VERSION}.tar
