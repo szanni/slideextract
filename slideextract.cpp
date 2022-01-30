@@ -1,6 +1,7 @@
 /* slideextract -- implementation
  *
  * Copyright (c) 2013, Angelo Haller <angelo@szanni.org>
+ * Copyright (c) 2022, Oleksiy Klymenko
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -157,24 +158,21 @@ se_extract_slides(const char *file, const char *outprefix, struct roi *roi)
 	if (!capture.isOpened())
 		return -1;
 
-	do {
+	bool is_final_frame = false;
+	while (!is_final_frame) {
 		capture.read(current);
 
-		bool is_final_frame = current.empty();
+		is_final_frame = current.empty();
 		bool is_changed_frame = !current.empty() && !last.empty()
 			&& _se_compare_image (last, current, roi) <= 0.999;
-                
+
 		if (is_final_frame || is_changed_frame) {
 			snprintf (str, sizeof(str)/sizeof(*str), "%s%d.png", outprefix, num++);
 			imwrite(str, last, image_properties);
 		}
 
-		if (is_final_frame)
-			break;
-
 		last = current.clone();
 	}
-	while (true);
 
 	return 0;
 }
