@@ -1,3 +1,12 @@
+0.3.0
+=====
+* [BREAK] Change handling of -r due to inconsistencies between docs and
+  implementation.
+  New API takes a point, width, and height in the format of: X.Y:WxH
+* Fix extraction of final slide
+* Fix handling of -h
+* Add 360p test video and related SVG files
+
 0.2.0
 =====
 * Add README to source distribution.
