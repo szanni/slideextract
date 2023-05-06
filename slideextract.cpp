@@ -149,7 +149,6 @@ se_extract_slides(const char *file, const char *outprefix, struct roi *roi)
 	std::vector<int> image_properties;
 	image_properties.push_back(IMWRITE_PNG_COMPRESSION);
 	image_properties.push_back(9);
-	image_properties.push_back(0);
 
 	Mat current;
 	Mat last;
