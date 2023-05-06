@@ -1,3 +1,7 @@
+0.3.1
+=====
+* Fix imwrite() parameters to work with OpenCV 4.7
+
 0.3.0
 =====
 * [BREAK] Change handling of -r due to inconsistencies between docs and
